@@ -1,0 +1,50 @@
+syntax = "proto3";
+package pt.ulisboa.tecnico.distledger.contract.user;
+
+import "DistLedgerCommonDefinitions.proto";
+
+option java_multiple_files = true;
+// User Interface of the DistLedger Service
+
+message BalanceRequest {
+  string userId = 1;
+  Timestamp prev = 2;
+}
+
+message BalanceResponse {
+  int32 value = 1;
+  Timestamp new = 2;
+}
+
+message CreateAccountRequest {
+  string userId = 1;
+  Timestamp prev = 2;
+}
+
+message CreateAccountResponse {
+  Timestamp new = 1;
+}
+
+message DeleteAccountRequest {
+  string userId = 1;
+}
+
+message DeleteAccountResponse {}
+
+message TransferToRequest {
+  string accountFrom = 1;
+  string accountTo = 2;
+  int32 amount = 3;
+  Timestamp prev = 4;
+}
+
+message TransferToResponse {
+  Timestamp new = 1;
+}
+
+service UserService {
+  rpc balance(BalanceRequest) returns (BalanceResponse);
+  rpc createAccount(CreateAccountRequest) returns (CreateAccountResponse);
+  rpc deleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
+  rpc transferTo(TransferToRequest) returns (TransferToResponse);
+}
